@@ -1,8 +1,8 @@
 name: geohex
-description: A starting point for Dart libraries or applications.
-version: 3.2.2
-# homepage: https://www.example.com
-# author: Nikolai Simonov <nickolay.simonov@outlook.com>
+description: Dart implementation of GeoHex encoding.
+version: 3.2.0+1
+homepage: https://github.com/NiKoTron/geohex
+author: Nikolai Simonov <nickolay.simonov@outlook.com>
 
 environment:
   sdk: '>=2.4.0 <3.0.0'

@@ -1,22 +1,34 @@
-A library for Dart developers.
+# GeoHex for Dart
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+Implementation of [GeoHex](http://www.geohex.org/) encoding for Dart language.
 
 ## Usage
 
-A simple usage example:
+Encoding example:
 
 ```dart
 import 'package:geohex/geohex.dart';
 
 main() {
-  var awesome = new Awesome();
+  //Location of Capetown
+  String geoHexCode = GeoHex.encode(-33.91522085, 18.3758784, 4); //OM4138
 }
+
 ```
 
-## Features and bugs
+Decoding example:
 
-Please file feature requests and bugs at the [issue tracker][tracker].
+```dart
+import 'package:geohex/geohex.dart';
 
-[tracker]: http://example.com/issues/replaceme
+main() {
+  //Geocode of Capetown
+  String geoHexCode = GeoHex.decode('OM4138'); // instance of Zone with lat -33.91522085 lon 18.3758784 and level 4
+}
+
+```
+
+## Note
+This realisation has some difference with the original lib. It's location clamping. Original [lib](http://www.geohex.org/) uses `double` representation of lat'n'lon, so theoretically, it should take more precision etc. but in fact, it leads to errors. 
+
+Refer to this - [decimal degrees](https://en.wikipedia.org/wiki/Decimal_degrees), eight points after dot the should be enough for everything.

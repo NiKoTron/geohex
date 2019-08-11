@@ -1,3 +1,4 @@
-## 1.0.0
+## 3.2.0+1
 
-- Initial version, created by Stagehand
+- Initial version.
+- Precision clamping

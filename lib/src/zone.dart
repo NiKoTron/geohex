@@ -25,50 +25,48 @@ class Zone {
       throw ArgumentError('level must be between 0 and 15');
     }
 
-    XY xy = XY.byLocation(lat, lon, level);
+    final xy = XY.byLocation(lat, lon, level);
     return Zone.byXY(xy.x, xy.y, level);
   }
 
   factory Zone.byCode(String code) {
-    XY xy = XY.byCode(code);
-    int level = code.length - 2;
-    Zone zone = Zone.byXY(xy.x, xy.y, level);
-    return zone;
+    final xy = XY.byCode(code);
+    return Zone.byXY(xy.x, xy.y, code.length - 2);
   }
 
   factory Zone.byXY(double x, double y, int level) {
-    double h_size = calcHexSize(level);
-    int h_x = x.round();
-    int h_y = y.round();
-    double unit_x = 6 * h_size;
-    double unit_y = 6 * h_size * h_k;
-    double h_lat = (h_k * h_x * unit_x + h_y * unit_y) / 2;
-    double h_lon = (h_lat - h_y * unit_y) / h_k;
-    Loc z_loc = xy2loc(h_lon, h_lat);
-    double z_loc_x = z_loc.lon;
-    double z_loc_y = z_loc.lat;
-    double max_hsteps = math.pow(3, level + 2).toDouble();
-    double hsteps = ((h_x - h_y)).abs().toDouble();
+    final h_size = calcHexSize(level);
+    var h_x = x.round();
+    var h_y = y.round();
+    final unit_x = 6 * h_size;
+    final unit_y = 6 * h_size * h_k;
+    final h_lat = (h_k * h_x * unit_x + h_y * unit_y) / 2;
+    final h_lon = (h_lat - h_y * unit_y) / h_k;
+    final z_loc = xy2loc(h_lon, h_lat);
+    var z_loc_x = z_loc.lon;
+    final z_loc_y = z_loc.lat;
+    final max_hsteps = math.pow(3, level + 2).toDouble();
+    final hsteps = ((h_x - h_y)).abs().toDouble();
 
     if (hsteps == max_hsteps) {
       if (h_x > h_y) {
-        int tmp = h_x;
+        final tmp = h_x;
         h_x = h_y;
         h_y = tmp;
       }
       z_loc_x = -180;
     }
 
-    StringBuffer h_code = StringBuffer();
-    List<int> code3_x = List<int>();
-    List<int> code3_y = List<int>();
+    final h_code = StringBuffer();
+    final code3_x = List<int>();
+    final code3_y = List<int>();
 
-    int mod_x = h_x;
-    int mod_y = h_y;
+    var mod_x = h_x;
+    var mod_y = h_y;
 
-    for (int i = 0; i <= level + 2; i++) {
-      int h_pow = math.pow(3, level + 2 - i).round();
-      double h_pow_half = (h_pow / 2).ceilToDouble();
+    for (var i = 0; i <= level + 2; i++) {
+      final h_pow = math.pow(3, level + 2 - i).round();
+      final h_pow_half = (h_pow / 2).ceilToDouble();
       if (mod_x >= h_pow_half) {
         code3_x.add(2);
         mod_x -= h_pow;
@@ -106,39 +104,42 @@ class Zone {
       }
     }
 
-    for (int i = 0; i < code3_x.length; i++) {
-      var c3 = '${code3_x[i]}${code3_y[i]}';
-      var c9 = '${int.parse(c3, radix: 3)}';
+    for (var i = 0; i < code3_x.length; i++) {
+      final c3 = '${code3_x[i]}${code3_y[i]}';
+      final c9 = '${int.parse(c3, radix: 3)}';
       h_code.write(c9);
     }
 
-    String h_2 = h_code.toString().substring(3);
-    int h_1 = int.parse(h_code.toString().substring(0, 3));
-    int h_a1 = (h_1 / 30).floor();
-    int h_a2 = h_1 % 30;
-    StringBuffer h_code_r = StringBuffer();
-    h_code_r..write(h_key[h_a1])..write(h_key[h_a2])..write(h_2.toString());
+    final h_2 = h_code.toString().substring(3);
+    final h_1 = int.parse(h_code.toString().substring(0, 3));
+    final h_a1 = (h_1 / 30).floor();
+    final h_a2 = h_1 % 30;
+    final h_code_r = StringBuffer()
+      ..write(hKey[h_a1])
+      ..write(hKey[h_a2])
+      ..write(h_2.toString());
+
     return Zone(z_loc_y, z_loc_x, h_x, h_y, h_code_r.toString());
   }
 
   double get hexSize => calcHexSize(this.level);
 
   List<Loc> get hexCoords {
-    double h_lat = this.lat;
-    double h_lon = this.lon;
-    XY h_xy = loc2xy(h_lon, h_lat);
-    double h_x = h_xy.x;
-    double h_y = h_xy.y;
+    final h_lat = this.lat;
+    final h_lon = this.lon;
+    final h_xy = loc2xy(h_lon, h_lat);
+    final h_x = h_xy.x;
+    final h_y = h_xy.y;
 
-    double h_deg = math.tan(math.pi * (60.0 / 180.0));
-    double h_size = this.hexSize;
-    double h_top = xy2loc(h_x, h_y + h_deg * h_size).lat;
-    double h_btm = xy2loc(h_x, h_y - h_deg * h_size).lat;
+    final h_deg = math.tan(math.pi * (60.0 / 180.0));
+    final h_size = this.hexSize;
+    final h_top = xy2loc(h_x, h_y + h_deg * h_size).lat;
+    final h_btm = xy2loc(h_x, h_y - h_deg * h_size).lat;
 
-    double h_l = xy2loc(h_x - 2 * h_size, h_y).lon;
-    double h_r = xy2loc(h_x + 2 * h_size, h_y).lon;
-    double h_cl = xy2loc(h_x - 1 * h_size, h_y).lon;
-    double h_cr = xy2loc(h_x + 1 * h_size, h_y).lon;
+    final h_l = xy2loc(h_x - 2 * h_size, h_y).lon;
+    final h_r = xy2loc(h_x + 2 * h_size, h_y).lon;
+    final h_cl = xy2loc(h_x - 1 * h_size, h_y).lon;
+    final h_cr = xy2loc(h_x + 1 * h_size, h_y).lon;
     return [
       Loc(h_lat, h_l),
       Loc(h_top, h_cl),
