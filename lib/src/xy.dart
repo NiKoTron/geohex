@@ -51,7 +51,7 @@ class XY {
       if (h_dec9[0] == '5') {
         h_dec9 = '7${h_dec9.substring(1, h_dec9.length)}';
       } else if (h_dec9[0] == '1') {
-        h_dec9 = '3{h_dec9.substring(1, h_dec9.length)}';
+        h_dec9 = '3${h_dec9.substring(1, h_dec9.length)}';
       }
     }
 

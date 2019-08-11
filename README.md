@@ -1,5 +1,7 @@
 # GeoHex for Dart
 
+[![pub package](https://img.shields.io/pub/v/geohex.svg)](https://pub.dartlang.org/packages/geohex) [![Coverage Status](https://coveralls.io/repos/github/NiKoTron/geohex/badge.svg?branch=master)](https://coveralls.io/github/NiKoTron/geohex?branch=master) [![Build Status](https://travis-ci.org/NiKoTron/geohex.svg?branch=master)](https://travis-ci.org/NiKoTron/geohex)
+
 Implementation of [GeoHex](http://www.geohex.org/) encoding for Dart language.
 
 ## Usage
