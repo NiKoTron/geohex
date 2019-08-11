@@ -9,27 +9,45 @@ import 'test_data/test_data.dart';
 void main() {
   group('Unit tests', () {
     test('Throws when latitude must be between -90 and 90', () {
-      expect(() => Zone.byLocation(91, 0, 1), 
-        throwsA(predicate((e) => e is ArgumentError && e.message == 'latitude must be between -90 and 90')));
+      expect(
+          () => Zone.byLocation(91, 0, 1),
+          throwsA(predicate((e) =>
+              e is ArgumentError &&
+              e.message == 'latitude must be between -90 and 90')));
 
-      expect(() => Zone.byLocation(-91, 0, 1), 
-        throwsA(predicate((e) => e is ArgumentError && e.message == 'latitude must be between -90 and 90')));
+      expect(
+          () => Zone.byLocation(-91, 0, 1),
+          throwsA(predicate((e) =>
+              e is ArgumentError &&
+              e.message == 'latitude must be between -90 and 90')));
     });
 
     test('Throws when longitude must be between -180 and 180', () {
-      expect(() => Zone.byLocation(0, -181, 1), 
-        throwsA(predicate((e) => e is ArgumentError && e.message == 'longitude must be between -180 and 180')));
+      expect(
+          () => Zone.byLocation(0, -181, 1),
+          throwsA(predicate((e) =>
+              e is ArgumentError &&
+              e.message == 'longitude must be between -180 and 180')));
 
-      expect(() => Zone.byLocation(0, 181, 1), 
-        throwsA(predicate((e) => e is ArgumentError && e.message == 'longitude must be between -180 and 180')));
+      expect(
+          () => Zone.byLocation(0, 181, 1),
+          throwsA(predicate((e) =>
+              e is ArgumentError &&
+              e.message == 'longitude must be between -180 and 180')));
     });
 
     test('Throws when level must be between 0 and 15', () {
-      expect(() => Zone.byLocation(0, 0, 16), 
-        throwsA(predicate((e) => e is ArgumentError && e.message == 'level must be between 0 and 15')));
+      expect(
+          () => Zone.byLocation(0, 0, 16),
+          throwsA(predicate((e) =>
+              e is ArgumentError &&
+              e.message == 'level must be between 0 and 15')));
 
-      expect(() => Zone.byLocation(0, 0, -1), 
-        throwsA(predicate((e) => e is ArgumentError && e.message == 'level must be between 0 and 15')));
+      expect(
+          () => Zone.byLocation(0, 0, -1),
+          throwsA(predicate((e) =>
+              e is ArgumentError &&
+              e.message == 'level must be between 0 and 15')));
     });
 
     test('Zones should be equlas by code', () {
@@ -38,7 +56,7 @@ void main() {
       expect(fakeZone1, equals(fakeZone2));
     });
 
-    test('Zone hashCode is code hashCode' , () {
+    test('Zone hashCode is code hashCode', () {
       final fakeZone1 = Zone(0, 0, 0, 0, 'codeX');
       expect(fakeZone1.hashCode, equals(fakeZone1.code.hashCode));
     });
@@ -49,11 +67,11 @@ void main() {
       expect(fakeZone1, equals(fakeZone2));
     });
 
-    test('Loc hashCode' , () {
+    test('Loc hashCode', () {
       final fakeZone1 = Loc(0, 0);
-      expect(fakeZone1.hashCode, equals(fakeZone1.lat.hashCode^fakeZone1.lon.hashCode));
+      expect(fakeZone1.hashCode,
+          equals(fakeZone1.lat.hashCode ^ fakeZone1.lon.hashCode));
     });
-
   });
 
   group('Tests based on geohex.net/testcase', () {
