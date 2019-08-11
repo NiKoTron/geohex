@@ -1,3 +1,4 @@
+import 'package:geohex/src/loc.dart';
 import 'package:geohex/src/utils.dart';
 import 'package:geohex/src/xy.dart';
 import 'package:geohex/src/zone.dart';
@@ -29,6 +30,28 @@ void main() {
 
       expect(() => Zone.byLocation(0, 0, -1), 
         throwsA(predicate((e) => e is ArgumentError && e.message == 'level must be between 0 and 15')));
+    });
+
+    test('Zones should be equlas by code', () {
+      final fakeZone1 = Zone(0, 0, 0, 0, 'codeX');
+      final fakeZone2 = Zone(1, 1, 1, 1, 'codeX');
+      expect(fakeZone1, equals(fakeZone2));
+    });
+
+    test('Zone hashCode is code hashCode' , () {
+      final fakeZone1 = Zone(0, 0, 0, 0, 'codeX');
+      expect(fakeZone1.hashCode, equals(fakeZone1.code.hashCode));
+    });
+
+    test('Loc should be equlas', () {
+      final fakeZone1 = Loc(0, 0);
+      final fakeZone2 = Loc(0, 0);
+      expect(fakeZone1, equals(fakeZone2));
+    });
+
+    test('Loc hashCode' , () {
+      final fakeZone1 = Loc(0, 0);
+      expect(fakeZone1.hashCode, equals(fakeZone1.lat.hashCode^fakeZone1.lon.hashCode));
     });
 
   });
