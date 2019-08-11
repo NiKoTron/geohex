@@ -6,6 +6,33 @@ import 'package:test/test.dart';
 import 'test_data/test_data.dart';
 
 void main() {
+  group('Unit tests', () {
+    test('Throws when latitude must be between -90 and 90', () {
+      expect(() => Zone.byLocation(91, 0, 1), 
+        throwsA(predicate((e) => e is ArgumentError && e.message == 'latitude must be between -90 and 90')));
+
+      expect(() => Zone.byLocation(-91, 0, 1), 
+        throwsA(predicate((e) => e is ArgumentError && e.message == 'latitude must be between -90 and 90')));
+    });
+
+    test('Throws when longitude must be between -180 and 180', () {
+      expect(() => Zone.byLocation(0, -181, 1), 
+        throwsA(predicate((e) => e is ArgumentError && e.message == 'longitude must be between -180 and 180')));
+
+      expect(() => Zone.byLocation(0, 181, 1), 
+        throwsA(predicate((e) => e is ArgumentError && e.message == 'longitude must be between -180 and 180')));
+    });
+
+    test('Throws when level must be between 0 and 15', () {
+      expect(() => Zone.byLocation(0, 0, 16), 
+        throwsA(predicate((e) => e is ArgumentError && e.message == 'level must be between 0 and 15')));
+
+      expect(() => Zone.byLocation(0, 0, -1), 
+        throwsA(predicate((e) => e is ArgumentError && e.message == 'level must be between 0 and 15')));
+    });
+
+  });
+
   group('Tests based on geohex.net/testcase', () {
     //There is clamping till eight positions after the dot.
     //It's enough precision for decimal location ref. - https://en.wikipedia.org/wiki/Decimal_degrees
