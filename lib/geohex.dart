@@ -1,8 +1,5 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// Dart implementation of Hexagonal geo-coding system (GeoHex.org) encoding.
 library geohex;
 
 export 'src/geohex_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/zone.dart';

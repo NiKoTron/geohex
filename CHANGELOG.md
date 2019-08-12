@@ -7,3 +7,7 @@
 
  - Added some tests
  
+ ## 3.2.0+3
+
+ - Added missing export of zone.dart, thanx [synw](https://github.com/synw)
+ 

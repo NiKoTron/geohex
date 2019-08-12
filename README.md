@@ -25,7 +25,7 @@ import 'package:geohex/geohex.dart';
 
 main() {
   //Geocode of Capetown
-  String geoHexCode = GeoHex.decode('OM4138'); // instance of Zone with lat -33.91522085 lon 18.3758784 and level 4
+  Zone geoHexZone = GeoHex.decode('OM4138'); // instance of Zone with lat -33.91522085 lon 18.3758784 and level 4
 }
 
 ```
