@@ -1,6 +1,6 @@
 name: geohex
 description: Dart implementation of Hexagonal geo-coding system (GeoHex.org) encoding.
-version: 3.2.0+2
+version: 3.2.0+3
 homepage: https://github.com/NiKoTron/geohex
 author: Nikolai Simonov <nickolay.simonov@outlook.com>
 

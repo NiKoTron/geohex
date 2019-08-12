@@ -79,8 +79,8 @@ void main() {
     //It's enough precision for decimal location ref. - https://en.wikipedia.org/wiki/Decimal_degrees
     test('code -> HEX ', () {
       code2HEX.forEach((item) {
-        final expLat = clamp(item[1].toDouble(), 8);
-        final expLon = clamp(item[2].toDouble(), 8);
+        final expLat = clampPrecisionn(item[1].toDouble());
+        final expLon = clampPrecisionn(item[2].toDouble());
 
         final res = Zone.byCode(item[0]);
 
