@@ -5,8 +5,8 @@ import 'package:test/test.dart';
 
 import 'test_data/test_data.dart';
 
-void main(){
-    group('Tests based on geohex.net/testcase', () {
+void main() {
+  group('Tests based on geohex.net/testcase', () {
     //There is clamping till eight positions after the dot.
     //It's enough precision for decimal location ref. - https://en.wikipedia.org/wiki/Decimal_degrees
     test('code -> HEX ', () {
@@ -48,5 +48,4 @@ void main(){
       });
     });
   });
-
 }
