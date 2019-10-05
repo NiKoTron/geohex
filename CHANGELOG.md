@@ -18,3 +18,9 @@
  - Improved test coverage
  - Separated unit test and geohex.net testcases
  - Fixed potential crash in adjustXY method
+
+## 3.2.0+5
+
+ - merged back geohex_net test file into geohex_test
+ - added more tests
+ 
