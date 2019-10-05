@@ -13,6 +13,5 @@ void main() {
 
   print('${len * a.hexSize} 鯨尺');
   print('${(len * a.hexSize) / (25 / 66)}m');
-  print('${(len * a.hexSize) / (10 / 33)}m');  
-  
+  print('${(len * a.hexSize) / (10 / 33)}m');
 }

@@ -44,8 +44,8 @@ class XY {
     var h_dec9 =
         '${hKey.indexOf(code[0]) * 30 + hKey.indexOf(code[1])}${(code.substring(2))}';
     if (inc15.hasMatch(h_dec9[0]) &&
-         exc125.hasMatch(h_dec9[1]) &&
-         exc125.hasMatch(h_dec9[2])) {
+        exc125.hasMatch(h_dec9[1]) &&
+        exc125.hasMatch(h_dec9[2])) {
       if (h_dec9[0] == '5') {
         h_dec9 = '7${h_dec9.substring(1, h_dec9.length)}';
       } else if (h_dec9[0] == '1') {
