@@ -37,8 +37,6 @@ Loc xy2loc(double x, double y) {
 
 double calcHexSize(int level) => (hBase / math.pow(3.0, level + 3));
 
-bool regMatch(String cs, RegExp pat) => pat.hasMatch(cs);
-
 XY adjustXY(int x, int y, int level) {
   var resultX = x.toDouble();
   var resultY = y.toDouble();
@@ -58,8 +56,8 @@ XY adjustXY(int x, int y, int level) {
       resultX = (y + diff_y + diff_x).toDouble();
       resultY = (x - diff_x - diff_y).toDouble();
     } else if (y > x) {
-      resultX = y - diff_y - diff_x;
-      resultY = x + diff_x + diff_y;
+      resultX = (y - diff_y - diff_x).toDouble();
+      resultY = (x + diff_x + diff_y).toDouble();
     }
   }
   return XY(resultX, resultY);
