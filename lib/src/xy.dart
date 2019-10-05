@@ -10,16 +10,14 @@ class XY {
   factory XY.byLocation(double lat, double lon, int level) {
     final h_size = calcHexSize(level);
     final z_xy = loc2xy(lon, lat);
-    final lon_grid = z_xy.x;
-    final lat_grid = z_xy.y;
-    final unit_x = 6 * h_size;
-    final unit_y = 6 * h_size * h_k;
-    final h_pos_x = (lon_grid + lat_grid / h_k) / unit_x;
-    final h_pos_y = (lat_grid - h_k * lon_grid) / unit_y;
+
+    final h_pos_x = (z_xy.x + z_xy.y / h_k) / (6 * h_size);
+    final h_pos_y = (z_xy.y - h_k * z_xy.x) / (6 * h_size * h_k);
     final h_x_0 = (h_pos_x).floor();
     final h_y_0 = (h_pos_y).floor();
     final h_x_q = h_pos_x - h_x_0;
     final h_y_q = h_pos_y - h_y_0;
+
     var h_x = (h_pos_x).round();
     var h_y = (h_pos_y).round();
 
@@ -35,7 +33,7 @@ class XY {
       }
     }
 
-    return adjustXY(h_x.toDouble(), h_y.toDouble(), level);
+    return adjustXY(h_x, h_y, level);
   }
 
   factory XY.byCode(String code) {
@@ -45,9 +43,9 @@ class XY {
 
     var h_dec9 =
         '${hKey.indexOf(code[0]) * 30 + hKey.indexOf(code[1])}${(code.substring(2))}';
-    if (regMatch(h_dec9[0], inc15) &&
-        regMatch(h_dec9[1], exc125) &&
-        regMatch(h_dec9[2], exc125)) {
+    if (inc15.hasMatch(h_dec9[0]) &&
+        exc125.hasMatch(h_dec9[1]) &&
+        exc125.hasMatch(h_dec9[2])) {
       if (h_dec9[0] == '5') {
         h_dec9 = '7${h_dec9.substring(1, h_dec9.length)}';
       } else if (h_dec9[0] == '1') {
@@ -93,7 +91,7 @@ class XY {
       }
     }
 
-    return adjustXY(h_x.toDouble(), h_y.toDouble(), level);
+    return adjustXY(h_x, h_y, level);
   }
 
   @override

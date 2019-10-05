@@ -11,3 +11,10 @@
 
  - Added missing export of zone.dart, thanx [synw](https://github.com/synw)
  
+ ## 3.2.0+4
+
+ - Renamed clamp to clampPrecision
+ - Internal code minificatication
+ - Improved test coverage
+ - Separated unit test and geohex.net testcases
+ - Fixed potential crash in adjustXY method

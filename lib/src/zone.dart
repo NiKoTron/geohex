@@ -10,6 +10,9 @@ class Zone {
   final int x;
   final int y;
   final String code;
+
+  List<Loc> _hex;
+
   int get level => this.code.length - 2;
 
   Zone(this.lat, this.lon, this.x, this.y, this.code);
@@ -38,10 +41,10 @@ class Zone {
     final h_size = calcHexSize(level);
     var h_x = x.round();
     var h_y = y.round();
-    final unit_x = 6 * h_size;
-    final unit_y = 6 * h_size * h_k;
-    final h_lat = (h_k * h_x * unit_x + h_y * unit_y) / 2;
-    final h_lon = (h_lat - h_y * unit_y) / h_k;
+
+    final h_lat = (h_k * h_x * (6 * h_size) + h_y * (6 * h_size * h_k)) / 2;
+    final h_lon = (h_lat - h_y * (6 * h_size * h_k)) / h_k;
+
     final z_loc = xy2loc(h_lon, h_lat);
     var z_loc_x = z_loc.lon;
     final z_loc_y = z_loc.lat;
@@ -114,40 +117,37 @@ class Zone {
     final h_1 = int.parse(h_code.toString().substring(0, 3));
     final h_a1 = (h_1 / 30).floor();
     final h_a2 = h_1 % 30;
-    final h_code_r = StringBuffer()
-      ..write(hKey[h_a1])
-      ..write(hKey[h_a2])
-      ..write(h_2.toString());
 
-    return Zone(z_loc_y, z_loc_x, h_x, h_y, h_code_r.toString());
+    return Zone(z_loc_y, z_loc_x, h_x, h_y, '${hKey[h_a1]}${hKey[h_a2]}$h_2');
   }
 
   double get hexSize => calcHexSize(this.level);
 
   List<Loc> get hexCoords {
-    final h_lat = this.lat;
-    final h_lon = this.lon;
-    final h_xy = loc2xy(h_lon, h_lat);
-    final h_x = h_xy.x;
-    final h_y = h_xy.y;
+    if (_hex == null) {
+      final h_xy = loc2xy(this.lon, this.lat);
 
-    final h_deg = math.tan(math.pi * (60.0 / 180.0));
-    final h_size = this.hexSize;
-    final h_top = xy2loc(h_x, h_y + h_deg * h_size).lat;
-    final h_btm = xy2loc(h_x, h_y - h_deg * h_size).lat;
+      final h_deg = math.tan(math.pi * (60.0 / 180.0));
 
-    final h_l = xy2loc(h_x - 2 * h_size, h_y).lon;
-    final h_r = xy2loc(h_x + 2 * h_size, h_y).lon;
-    final h_cl = xy2loc(h_x - 1 * h_size, h_y).lon;
-    final h_cr = xy2loc(h_x + 1 * h_size, h_y).lon;
-    return [
-      Loc(h_lat, h_l),
-      Loc(h_top, h_cl),
-      Loc(h_top, h_cr),
-      Loc(h_lat, h_r),
-      Loc(h_btm, h_cr),
-      Loc(h_btm, h_cl)
-    ];
+      final h_top = xy2loc(h_xy.x, h_xy.y + h_deg * this.hexSize).lat;
+      final h_btm = xy2loc(h_xy.x, h_xy.y - h_deg * this.hexSize).lat;
+
+      final h_l = xy2loc(h_xy.x - 2 * this.hexSize, h_xy.y).lon;
+      final h_r = xy2loc(h_xy.x + 2 * this.hexSize, h_xy.y).lon;
+
+      final h_cl = xy2loc(h_xy.x - 1 * this.hexSize, h_xy.y).lon;
+      final h_cr = xy2loc(h_xy.x + 1 * this.hexSize, h_xy.y).lon;
+
+      _hex = [
+        Loc(this.lat, h_l),
+        Loc(h_top, h_cl),
+        Loc(h_top, h_cr),
+        Loc(this.lat, h_r),
+        Loc(h_btm, h_cr),
+        Loc(h_btm, h_cl)
+      ];
+    }
+    return _hex;
   }
 
   @override
