@@ -12,6 +12,7 @@ class Zone {
   final String code;
 
   List<Loc> _hex;
+  List<Zone> _neighbours;
 
   int get level => this.code.length - 2;
 
@@ -148,6 +149,22 @@ class Zone {
       ];
     }
     return _hex;
+  }
+
+  List<Zone> get neighbours {
+    if (_neighbours == null) {
+      double x = this.x.toDouble();
+      double y = this.y.toDouble();
+      _neighbours = [
+        Zone.byXY(x + 1, y, this.level),
+        Zone.byXY(x, y + 1, this.level),
+        Zone.byXY(x + 1, y + 1, this.level),
+        Zone.byXY(x - 1, y, this.level),
+        Zone.byXY(x, y - 1, this.level),
+        Zone.byXY(x - 1, y - 1, this.level),
+      ];
+    }
+    return _neighbours;
   }
 
   @override
