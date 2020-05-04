@@ -69,8 +69,8 @@ class XY {
       h_dec3.write(h_dec0);
     }
 
-    final h_decx = List<String>();
-    final h_decy = List<String>();
+    final h_decx = <String>[];
+    final h_decy = <String>[];
 
     for (var i = 0; i < h_dec3.length / 2; i++) {
       h_decx.add(h_dec3.toString()[i * 2]);
@@ -96,8 +96,8 @@ class XY {
 
   @override
   bool operator ==(other) =>
-      other is XY && this.x == other.x && this.y == other.y;
+      other is XY && x == other.x && y == other.y;
 
   @override
-  int get hashCode => this.x.hashCode ^ this.y.hashCode;
+  int get hashCode => x.hashCode ^ y.hashCode;
 }

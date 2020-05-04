@@ -5,8 +5,8 @@ class Loc {
 
   @override
   bool operator ==(other) =>
-      other is Loc && this.lat == other.lat && this.lon == other.lon;
+      other is Loc && lat == other.lat && lon == other.lon;
 
   @override
-  int get hashCode => this.lat.hashCode ^ this.lon.hashCode;
+  int get hashCode => lat.hashCode ^ lon.hashCode;
 }

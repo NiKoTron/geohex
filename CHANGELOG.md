@@ -1,17 +1,16 @@
-## 3.2.0+1
+## 3.2.0+6
 
-- Initial version.
-- Precision clamping
+ - Fixed lint warnings
 
 ## 3.2.0+2
 
  - Added some tests
- 
+
  ## 3.2.0+3
 
  - Added missing export of zone.dart, thanx [synw](https://github.com/synw)
  
- ## 3.2.0+4
+## 3.2.0+4
 
  - Renamed clamp to clampPrecision
  - Internal code minificatication
@@ -23,4 +22,9 @@
 
  - merged back geohex_net test file into geohex_test
  - added more tests
+ 
+## 3.2.0+1
+
+- Initial version.
+- Precision clamping 
  
