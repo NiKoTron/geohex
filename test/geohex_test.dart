@@ -3,6 +3,11 @@ import 'package:geohex/src/xy.dart';
 import 'package:geohex/src/zone.dart';
 import 'package:test/test.dart';
 
+import 'package:geohex/geohex.dart';
+import 'package:geohex/src/utils.dart';
+
+import 'test_data/test_data.dart';
+
 import 'package:geohex/src/utils.dart' as utils;
 
 void main() {
@@ -70,6 +75,71 @@ void main() {
       final fakeZone1 = Loc(0, 0);
       expect(fakeZone1.hashCode,
           equals(fakeZone1.lat.hashCode ^ fakeZone1.lon.hashCode));
+    });
+
+    test('XY should be equals', () {
+      final xy1 = XY(1, 0);
+      final xy2 = XY(1, 0);
+      expect(xy1, equals(xy2));
+    });
+
+    test('XY should be equals', () {
+      final xy1 = XY(1, 0);
+      expect(xy1.hashCode, equals(xy1.x.hashCode ^ xy1.y.hashCode));
+    });
+  });
+
+  group('zone test', () {
+    test('level should be equals to code length - 2', () {
+      final zone1 = Zone.byCode('OM4138');
+      final zone2 = Zone.byCode('OM413845');
+
+      expect(zone1.level, equals(zone1.code.length - 2));
+      expect(zone2.level, equals(zone2.code.length - 2));
+    });
+
+    test('hex size clculate by utils method', () {
+      final zone = Zone.byCode('OM4138');
+
+      expect(zone.hexSize, equals(utils.calcHexSize(zone.level)));
+    });
+
+    test('hex coordinates', () {
+      final zone = Zone.byCode('OM4138');
+
+      final predefinedCoords = [
+        Loc(-33.89649638, 18.35390947),
+        Loc(-33.77808655, 18.43621399),
+        Loc(-33.77808655, 18.60082305),
+        Loc(-33.89649638, 18.68312757),
+        Loc(-34.01474202, 18.60082305),
+        Loc(-34.01474202, 18.43621399)
+      ];
+
+      expect(zone.hexCoords, orderedEquals(predefinedCoords));
+    });
+  });
+
+  group('base test', () {
+    test('version check', () {
+      expect(GeoHex.version, equals('3.2.0'));
+    });
+
+    test('encode should call Zone.byLocation with clamped values', () {
+      final lat = -33.91522085101010;
+      final lon = 18.375878401010101;
+      final code =
+          Zone.byLocation(clampPrecisionn(lat), clampPrecisionn(lon), 4).code;
+      final codeB = GeoHex.encode(lat, lon, 4);
+
+      expect(codeB, equals(code));
+    });
+
+    test('decode should call Zone.byCode', () {
+      final zone = Zone.byCode('OM4138');
+      final zoneB = GeoHex.decode('OM4138');
+
+      expect(zoneB, equals(zone));
     });
   });
 
@@ -180,6 +250,49 @@ void main() {
       expect(axy1, equals(const XY(18, 45)));
       expect(axy2, equals(const XY(718, 145)));
       expect(axy3, equals(const XY(172, 591)));
+    });
+  });
+
+  group('Tests based on geohex.net/testcase', () {
+    //There is clamping till eight positions after the dot.
+    //It's enough precision for decimal location ref. - https://en.wikipedia.org/wiki/Decimal_degrees
+    test('code -> HEX ', () {
+      code2HEX.forEach((item) {
+        final expLat = clampPrecisionn(item[1].toDouble());
+        final expLon = clampPrecisionn(item[2].toDouble());
+
+        final res = Zone.byCode(item[0]);
+
+        expect(res.lon, equals(expLon));
+        expect(res.lat, equals(expLat));
+      });
+    });
+
+    test('coord to HEX', () {
+      coord2HEX.forEach((item) {
+        final exp = item[3];
+        final res =
+            Zone.byLocation(item[1].toDouble(), item[2].toDouble(), item[0])
+                .code;
+        expect(res, equalsIgnoringCase(exp));
+      });
+    });
+
+    test('coord to XY', () {
+      code2XY.forEach((item) {
+        final exp = XY(item[1].toDouble(), item[2].toDouble());
+        final res = XY.byCode(item[0]);
+        expect(res, equals(exp));
+      });
+    });
+
+    test('XY to HEX', () {
+      xy2HEX.forEach((item) {
+        final exp = item[3];
+        final res =
+            Zone.byXY(item[1].toDouble(), item[2].toDouble(), item[0]).code;
+        expect(res, equalsIgnoringCase(exp));
+      });
     });
   });
 }
