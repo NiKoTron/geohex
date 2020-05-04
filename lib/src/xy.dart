@@ -95,8 +95,7 @@ class XY {
   }
 
   @override
-  bool operator ==(other) =>
-      other is XY && x == other.x && y == other.y;
+  bool operator ==(other) => other is XY && x == other.x && y == other.y;
 
   @override
   int get hashCode => x.hashCode ^ y.hashCode;
