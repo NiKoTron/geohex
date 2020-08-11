@@ -1,12 +1,17 @@
+/// Represents location include lattitude and longitude
 class Loc {
-  final double lat, lon;
+  /// Lattitude
+  final double lat;
+
+  /// Longitude
+  final double lon;
 
   const Loc(this.lat, this.lon);
 
   @override
   bool operator ==(other) =>
-      other is Loc && this.lat == other.lat && this.lon == other.lon;
+      other is Loc && lat == other.lat && lon == other.lon;
 
   @override
-  int get hashCode => this.lat.hashCode ^ this.lon.hashCode;
+  int get hashCode => lat.hashCode ^ lon.hashCode;
 }

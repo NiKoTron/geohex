@@ -12,8 +12,9 @@ class Zone {
   final String code;
 
   List<Loc> _hex;
+  List<Zone> _neighbours;
 
-  int get level => this.code.length - 2;
+  int get level => code.length - 2;
 
   Zone(this.lat, this.lon, this.x, this.y, this.code);
 
@@ -61,8 +62,8 @@ class Zone {
     }
 
     final h_code = StringBuffer();
-    final code3_x = List<int>();
-    final code3_y = List<int>();
+    final code3_x = <int>[];
+    final code3_y = <int>[];
 
     var mod_x = h_x;
     var mod_y = h_y;
@@ -121,28 +122,28 @@ class Zone {
     return Zone(z_loc_y, z_loc_x, h_x, h_y, '${hKey[h_a1]}${hKey[h_a2]}$h_2');
   }
 
-  double get hexSize => calcHexSize(this.level);
+  double get hexSize => calcHexSize(level);
 
   List<Loc> get hexCoords {
     if (_hex == null) {
-      final h_xy = loc2xy(this.lon, this.lat);
+      final h_xy = loc2xy(lon, lat);
 
       final h_deg = math.tan(math.pi * (60.0 / 180.0));
 
-      final h_top = xy2loc(h_xy.x, h_xy.y + h_deg * this.hexSize).lat;
-      final h_btm = xy2loc(h_xy.x, h_xy.y - h_deg * this.hexSize).lat;
+      final h_top = xy2loc(h_xy.x, h_xy.y + h_deg * hexSize).lat;
+      final h_btm = xy2loc(h_xy.x, h_xy.y - h_deg * hexSize).lat;
 
-      final h_l = xy2loc(h_xy.x - 2 * this.hexSize, h_xy.y).lon;
-      final h_r = xy2loc(h_xy.x + 2 * this.hexSize, h_xy.y).lon;
+      final h_l = xy2loc(h_xy.x - 2 * hexSize, h_xy.y).lon;
+      final h_r = xy2loc(h_xy.x + 2 * hexSize, h_xy.y).lon;
 
-      final h_cl = xy2loc(h_xy.x - 1 * this.hexSize, h_xy.y).lon;
-      final h_cr = xy2loc(h_xy.x + 1 * this.hexSize, h_xy.y).lon;
+      final h_cl = xy2loc(h_xy.x - 1 * hexSize, h_xy.y).lon;
+      final h_cr = xy2loc(h_xy.x + 1 * hexSize, h_xy.y).lon;
 
       _hex = [
-        Loc(this.lat, h_l),
+        Loc(lat, h_l),
         Loc(h_top, h_cl),
         Loc(h_top, h_cr),
-        Loc(this.lat, h_r),
+        Loc(lat, h_r),
         Loc(h_btm, h_cr),
         Loc(h_btm, h_cl)
       ];
@@ -150,9 +151,25 @@ class Zone {
     return _hex;
   }
 
-  @override
-  bool operator ==(other) => other is Zone && this.code == other.code;
+  List<Zone> get neighbours {
+    if (_neighbours == null) {
+      final x = this.x.toDouble();
+      final y = this.y.toDouble();
+      _neighbours = [
+        Zone.byXY(x + 1, y, level),
+        Zone.byXY(x, y + 1, level),
+        Zone.byXY(x + 1, y + 1, level),
+        Zone.byXY(x - 1, y, level),
+        Zone.byXY(x, y - 1, level),
+        Zone.byXY(x - 1, y - 1, level),
+      ];
+    }
+    return _neighbours;
+  }
 
   @override
-  int get hashCode => this.code.hashCode;
+  bool operator ==(other) => other is Zone && code == other.code;
+
+  @override
+  int get hashCode => code.hashCode;
 }
