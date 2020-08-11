@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/geohex.svg)](https://pub.dartlang.org/packages/geohex) [![Coverage Status](https://coveralls.io/repos/github/NiKoTron/geohex/badge.svg?branch=master)](https://coveralls.io/github/NiKoTron/geohex?branch=master) [![Build Status](https://travis-ci.org/NiKoTron/geohex.svg?branch=master)](https://travis-ci.org/NiKoTron/geohex)
 
-Implementation of [GeoHex](http://www.geohex.org/) encoding for Dart language.
+Implementation of `geohex.org` encoding for Dart language.
 
 ## Usage
 
@@ -31,6 +31,7 @@ main() {
 ```
 
 ## Note
-This realisation has some difference with the original lib. It's location clamping. Original [lib](http://www.geohex.org/) uses `double` representation of lat'n'lon, so theoretically, it should take more precision etc. but in fact, it leads to errors. 
+
+This realisation has some difference with the original lib. It's location clamping. Original `geohex.org` uses `double` representation of lat'n'lon, so theoretically, it should take more precision etc. but in fact, it leads to errors.
 
 Refer to this - [decimal degrees](https://en.wikipedia.org/wiki/Decimal_degrees), eight points after dot the should be enough for everything.

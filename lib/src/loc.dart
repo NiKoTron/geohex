@@ -1,5 +1,10 @@
+/// Represents location include lattitude and longitude
 class Loc {
-  final double lat, lon;
+  /// Lattitude
+  final double lat;
+
+  /// Longitude
+  final double lon;
 
   const Loc(this.lat, this.lon);
 

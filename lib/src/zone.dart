@@ -153,15 +153,15 @@ class Zone {
 
   List<Zone> get neighbours {
     if (_neighbours == null) {
-      double x = this.x.toDouble();
-      double y = this.y.toDouble();
+      final x = this.x.toDouble();
+      final y = this.y.toDouble();
       _neighbours = [
-        Zone.byXY(x + 1, y, this.level),
-        Zone.byXY(x, y + 1, this.level),
-        Zone.byXY(x + 1, y + 1, this.level),
-        Zone.byXY(x - 1, y, this.level),
-        Zone.byXY(x, y - 1, this.level),
-        Zone.byXY(x - 1, y - 1, this.level),
+        Zone.byXY(x + 1, y, level),
+        Zone.byXY(x, y + 1, level),
+        Zone.byXY(x + 1, y + 1, level),
+        Zone.byXY(x - 1, y, level),
+        Zone.byXY(x, y - 1, level),
+        Zone.byXY(x - 1, y - 1, level),
       ];
     }
     return _neighbours;

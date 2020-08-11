@@ -2,11 +2,14 @@ import 'dart:math' as math;
 
 import 'utils.dart';
 
+/// Represents X\Y position of cell on decoded map
 class XY {
   final double x, y;
 
   const XY(this.x, this.y);
 
+  /// Calculates and creates an XY
+  /// by passing lattitude longitude and wnated zoom level
   factory XY.byLocation(double lat, double lon, int level) {
     final h_size = calcHexSize(level);
     final z_xy = loc2xy(lon, lat);
@@ -36,6 +39,7 @@ class XY {
     return adjustXY(h_x, h_y, level);
   }
 
+  /// Calculates and creates XY instance from geohex code
   factory XY.byCode(String code) {
     final level = code.length - 2;
     var h_x = 0;
