@@ -1,10 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:math' as math;
 
 import 'utils.dart';
 
 /// Represents X\Y position of cell on decoded map
 class XY {
-  final double x, y;
+  final double? x, y;
 
   const XY(this.x, this.y);
 
@@ -14,8 +16,8 @@ class XY {
     final h_size = calcHexSize(level);
     final z_xy = loc2xy(lon, lat);
 
-    final h_pos_x = (z_xy.x + z_xy.y / h_k) / (6 * h_size);
-    final h_pos_y = (z_xy.y - h_k * z_xy.x) / (6 * h_size * h_k);
+    final h_pos_x = (z_xy.x! + z_xy.y! / h_k) / (6 * h_size);
+    final h_pos_y = (z_xy.y! - h_k * z_xy.x!) / (6 * h_size * h_k);
     final h_x_0 = (h_pos_x).floor();
     final h_y_0 = (h_pos_y).floor();
     final h_x_q = h_pos_x - h_x_0;
@@ -84,14 +86,14 @@ class XY {
     for (var i = 0; i <= level + 2; i++) {
       final h_pow = math.pow(3, level + 2 - i);
       if (h_decx[i] == '0') {
-        h_x -= h_pow;
+        h_x -= h_pow as int;
       } else if (h_decx[i] == '2') {
-        h_x += h_pow;
+        h_x += h_pow as int;
       }
       if (h_decy[i] == '0') {
-        h_y -= h_pow;
+        h_y -= h_pow as int;
       } else if (h_decy[i] == '2') {
-        h_y += h_pow;
+        h_y += h_pow as int;
       }
     }
 

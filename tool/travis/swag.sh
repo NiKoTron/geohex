@@ -3,8 +3,8 @@
 pub get || exit $
 
 EXIT_CODE=0
-dartfmt -n --set-exit-if-changed . || EXIT_CODE=$?
-echo "dartfmt exit with ${EXIT_CODE}"
+dart format --fix --set-exit-if-changed . || EXIT_CODE=$?
+echo "dart format exit with ${EXIT_CODE}"
 dartanalyzer --fatal-infos --fatal-warnings . || EXIT_CODE=$?
 echo "dartanalyzer exit with ${EXIT_CODE}"
 
