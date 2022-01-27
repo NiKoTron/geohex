@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:math' as math;
 
 import 'loc.dart';
@@ -11,8 +13,8 @@ class Zone {
   final int y;
   final String code;
 
-  List<Loc> _hex;
-  List<Zone> _neighbours;
+  List<Loc>? _hex;
+  List<Zone>? _neighbours;
 
   int get level => code.length - 2;
 
@@ -30,12 +32,12 @@ class Zone {
     }
 
     final xy = XY.byLocation(lat, lon, level);
-    return Zone.byXY(xy.x, xy.y, level);
+    return Zone.byXY(xy.x!, xy.y!, level);
   }
 
   factory Zone.byCode(String code) {
     final xy = XY.byCode(code);
-    return Zone.byXY(xy.x, xy.y, code.length - 2);
+    return Zone.byXY(xy.x!, xy.y!, code.length - 2);
   }
 
   factory Zone.byXY(double x, double y, int level) {
@@ -124,20 +126,20 @@ class Zone {
 
   double get hexSize => calcHexSize(level);
 
-  List<Loc> get hexCoords {
+  List<Loc>? get hexCoords {
     if (_hex == null) {
       final h_xy = loc2xy(lon, lat);
 
       final h_deg = math.tan(math.pi * (60.0 / 180.0));
 
-      final h_top = xy2loc(h_xy.x, h_xy.y + h_deg * hexSize).lat;
-      final h_btm = xy2loc(h_xy.x, h_xy.y - h_deg * hexSize).lat;
+      final h_top = xy2loc(h_xy.x!, h_xy.y! + h_deg * hexSize).lat;
+      final h_btm = xy2loc(h_xy.x!, h_xy.y! - h_deg * hexSize).lat;
 
-      final h_l = xy2loc(h_xy.x - 2 * hexSize, h_xy.y).lon;
-      final h_r = xy2loc(h_xy.x + 2 * hexSize, h_xy.y).lon;
+      final h_l = xy2loc(h_xy.x! - 2 * hexSize, h_xy.y!).lon;
+      final h_r = xy2loc(h_xy.x! + 2 * hexSize, h_xy.y!).lon;
 
-      final h_cl = xy2loc(h_xy.x - 1 * hexSize, h_xy.y).lon;
-      final h_cr = xy2loc(h_xy.x + 1 * hexSize, h_xy.y).lon;
+      final h_cl = xy2loc(h_xy.x! - 1 * hexSize, h_xy.y!).lon;
+      final h_cr = xy2loc(h_xy.x! + 1 * hexSize, h_xy.y!).lon;
 
       _hex = [
         Loc(lat, h_l),
@@ -151,7 +153,7 @@ class Zone {
     return _hex;
   }
 
-  List<Zone> get neighbours {
+  List<Zone>? get neighbours {
     if (_neighbours == null) {
       final x = this.x.toDouble();
       final y = this.y.toDouble();

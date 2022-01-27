@@ -1,6 +1,5 @@
 import 'package:geohex/src/loc.dart';
 import 'package:geohex/src/xy.dart';
-import 'package:geohex/src/zone.dart';
 import 'package:test/test.dart';
 
 import 'package:geohex/geohex.dart';
@@ -159,8 +158,8 @@ void main() {
     });
 
     test('h_deg should be tan ( pi * (30 / 180) )', () {
-      //tan ( pi * (30 / 180) ) = 0.5773502691896257
-      expect(utils.h_k, equals(0.5773502691896257));
+      //tan ( pi * (30 / 180) ) = 0.5773502691896256
+      expect(utils.h_k, equals(0.5773502691896256));
     });
 
     test('inc15 pattern should be [15]', () {
@@ -257,7 +256,7 @@ void main() {
     //There is clamping till eight positions after the dot.
     //It's enough precision for decimal location ref. - https://en.wikipedia.org/wiki/Decimal_degrees
     test('code -> HEX ', () {
-      code2HEX.forEach((item) {
+      for (var item in code2HEX) {
         final expLat = clampPrecisionn(item[1].toDouble());
         final expLon = clampPrecisionn(item[2].toDouble());
 
@@ -265,34 +264,34 @@ void main() {
 
         expect(res.lon, equals(expLon));
         expect(res.lat, equals(expLat));
-      });
+      }
     });
 
     test('coord to HEX', () {
-      coord2HEX.forEach((item) {
+      for (var item in coord2HEX) {
         final exp = item[3];
         final res =
             Zone.byLocation(item[1].toDouble(), item[2].toDouble(), item[0])
                 .code;
         expect(res, equalsIgnoringCase(exp));
-      });
+      }
     });
 
     test('coord to XY', () {
-      code2XY.forEach((item) {
+      for (var item in code2XY) {
         final exp = XY(item[1].toDouble(), item[2].toDouble());
         final res = XY.byCode(item[0]);
         expect(res, equals(exp));
-      });
+      }
     });
 
     test('XY to HEX', () {
-      xy2HEX.forEach((item) {
+      for (var item in xy2HEX) {
         final exp = item[3];
         final res =
             Zone.byXY(item[1].toDouble(), item[2].toDouble(), item[0]).code;
         expect(res, equalsIgnoringCase(exp));
-      });
+      }
     });
   });
 }
