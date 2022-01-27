@@ -1,3 +1,7 @@
+## 3.2.0+7
+
+- Null Safety migration
+
 ## 3.2.0+6
 
 - Increase pub's points
